@@ -38,6 +38,12 @@ export default class Vector {
      */
     get y(): number;
     /**
+     * Returns the angle value of this vector.
+     *
+     * @returns {number}
+     */
+    get angle(): number;
+    /**
      * Sets a new x value for this vector.
      *
      * @param {number} x The new x value for this vector.

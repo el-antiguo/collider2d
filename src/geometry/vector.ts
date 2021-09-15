@@ -49,6 +49,16 @@ export default class Vector {
   get y(): number { return this._y; }
 
   /**
+   * Returns the angle value of this vector.
+   * 
+   * @returns {number}
+   */
+   get angle(): number {
+    const angle = Math.atan2(this._y,this._x);
+    return angle<0?angle+6.28319:angle;
+  }
+
+  /**
    * Sets a new x value for this vector.
    * 
    * @param {number} x The new x value for this vector.

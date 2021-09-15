@@ -106,7 +106,13 @@ var Vector = /*#__PURE__*/function () {
     key: "y",
     get: function get() {
       return this._y;
-    },
+    }
+    /**
+     * Returns the angle value of this vector.
+     * 
+     * @returns {number}
+     */
+    ,
     set: function set(y) {
       this._y = y;
     }
@@ -118,6 +124,12 @@ var Vector = /*#__PURE__*/function () {
      * @returns {Vector} Returns this for chaining.
      */
 
+  }, {
+    key: "angle",
+    get: function get() {
+      var angle = Math.atan2(this._y, this._x);
+      return angle < 0 ? angle + 6.28319 : angle;
+    }
   }, {
     key: "copy",
     value: function copy(other) {
