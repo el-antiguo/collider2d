@@ -1,5 +1,6 @@
 import Vector from './geometry/vector';
 import Circle from './geometry/circle';
+import Ellipse from './geometry/ellipse';
 import Polygon from './geometry/polygon';
 import CollisionDetails from './collision_details';
 export default class Collider2D {
@@ -69,6 +70,15 @@ export default class Collider2D {
      * @returns {boolean} Returns true if the point is inside the circle or false otherwise.
      */
     pointInCircle(point: Vector, circle: Circle): boolean;
+    /**
+     * Check if a point is inside a circle.
+     *
+     * @param {Vector} point The point to test.
+     * @param {Circle} circle The circle to test.
+     *
+     * @returns {boolean} Returns true if the point is inside the circle or false otherwise.
+     */
+    pointInEllipse(point: Vector, ellipse: Ellipse): boolean;
     /**
      * Check if a point is inside a convex polygon.
      *
