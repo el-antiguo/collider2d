@@ -71,7 +71,43 @@ export default class Box {
     this.setOrigin(origin);
     
   }
-  
+
+  /**
+   * The position of this box as a Vector.
+   *
+   * @property {Vector}
+   */
+  get position() {
+    return this._position;
+  }
+
+  /**
+   * The width of this box.
+   *
+   * @property {number}
+   */
+  get width() {
+    return this._width;
+  }
+
+  /**
+   * The height of this box.
+   *
+   * @property {number}
+   */
+  get height() {
+    return this._height;
+  }
+
+  /**
+   * The origin point of this box.
+   *
+   * @property {Vector}
+   */
+  get origin() {
+    return this._height;
+  }
+
   /**
    * set the origin point of this Box.
    * 
