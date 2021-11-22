@@ -128,7 +128,7 @@ var Vector = /*#__PURE__*/function () {
     key: "angle",
     get: function get() {
       var angle = Math.atan2(this._y, this._x);
-      return angle < 0 ? angle + 360 : angle;
+      return angle < 0 ? angle + 6.28319 : angle;
     }
   }, {
     key: "copy",
@@ -922,13 +922,57 @@ var Box = /*#__PURE__*/function () {
     this.setOrigin(origin);
   }
   /**
-   * set the origin point of this Box.
-   * 
-   * @param {Vector | BoxOrigin} newOrigin the custom point of origin or common point of origin.
+   * The position of this box as a Vector.
+   *
+   * @property {Vector}
    */
 
 
   _createClass(Box, [{
+    key: "position",
+    get: function get() {
+      return this._position;
+    }
+    /**
+     * The width of this box.
+     *
+     * @property {number}
+     */
+
+  }, {
+    key: "width",
+    get: function get() {
+      return this._width;
+    }
+    /**
+     * The height of this box.
+     *
+     * @property {number}
+     */
+
+  }, {
+    key: "height",
+    get: function get() {
+      return this._height;
+    }
+    /**
+     * The origin point of this box.
+     *
+     * @property {Vector}
+     */
+
+  }, {
+    key: "origin",
+    get: function get() {
+      return this._height;
+    }
+    /**
+     * set the origin point of this Box.
+     * 
+     * @param {Vector | BoxOrigin} newOrigin the custom point of origin or common point of origin.
+     */
+
+  }, {
     key: "setOrigin",
     value: function setOrigin(newOrigin) {
       this._origin = newOrigin instanceof Vector ? newOrigin : this._getCommonsOrigin(newOrigin);
