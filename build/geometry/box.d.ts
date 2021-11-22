@@ -58,6 +58,30 @@ export default class Box {
      */
     constructor(position?: Vector, width?: number, height?: number, origin?: Vector | BoxOrigin);
     /**
+     * The position of this box as a Vector.
+     *
+     * @property {Vector}
+     */
+    get position(): Vector;
+    /**
+     * The width of this box.
+     *
+     * @property {number}
+     */
+    get width(): number;
+    /**
+     * The height of this box.
+     *
+     * @property {number}
+     */
+    get height(): number;
+    /**
+     * The origin point of this box.
+     *
+     * @property {Vector}
+     */
+    get origin(): number;
+    /**
      * set the origin point of this Box.
      *
      * @param {Vector | BoxOrigin} newOrigin the custom point of origin or common point of origin.
