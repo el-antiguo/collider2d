@@ -3,6 +3,7 @@
 import Box from './geometry/box';
 import Vector from './geometry/vector';
 import Circle from './geometry/circle';
+import Ellipse from './geometry/ellipse';
 import Polygon from './geometry/polygon';
 import CollisionDetails from './collision_details';
 
@@ -96,6 +97,26 @@ export default class Collider2D {
 
     // If the distance between is smaller than the radius then the point is inside the circle.
     return distanceSq <= radiusSq;
+  }
+  /**
+   * Check if a point is inside a circle.
+   * 
+   * @param {Vector} point The point to test.
+   * @param {Circle} circle The circle to test.
+   * 
+   * @returns {boolean} Returns true if the point is inside the circle or false otherwise.
+   */
+  pointInEllipse(point: Vector, ellipse: Ellipse): boolean {
+    const vector = this._T_VECTORS.pop()!.copy(point).sub(ellipse.position).sub(ellipse.offset);
+
+	  const widthSq = ellipse.width*ellipse.width
+	  const heightSq = ellipse.height*ellipse.height
+    const pointXSq = vector.x*vector.x;
+    const pointYSq = vector.y*vector.y;
+
+    this._T_VECTORS.push(vector);
+    // If the result distance is smaller than 1 the point its inside the ellipse
+	  return ((pointXSq)/(widthSq)+(pointYSq)/(heightSq)<=1);
   }
 
   /**

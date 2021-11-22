@@ -128,7 +128,7 @@ var Vector = /*#__PURE__*/function () {
     key: "angle",
     get: function get() {
       var angle = Math.atan2(this._y, this._x);
-      return angle < 0 ? angle + 6.28319 : angle;
+      return angle < 0 ? angle + 360 : angle;
     }
   }, {
     key: "copy",
@@ -1105,6 +1105,173 @@ var Circle = /*#__PURE__*/function () {
 }();
 
 /**
+ * Represents a ellipse with a position, width and height.
+ * 
+ * Creates a new ellipse, optionally passing in a position and/or width and height. If no position is given, the ellipse will be at `(0,0)`. 
+ * 
+ * If no width or height is provided the ellipse will have its values set to 0.
+ */
+var Ellipse = /*#__PURE__*/function () {
+  /**
+   * A Vector representing the center point of this ellipse.
+   * 
+   * @private
+   * 
+   * @property {Vector}
+   */
+
+  /**
+   * The width of this ellipse.
+   * 
+   * @private
+   * 
+   * @property {number}
+   */
+
+  /**
+   * The height of this ellipse.
+   * 
+   * @private
+   * 
+   * @property {number}
+   */
+
+  /**
+   * The offset of this ellipse.
+   * 
+   * @private
+   * 
+   * @property {Vector}
+   */
+
+  /**
+   * @param {Vector} position A Vector representing the center of this ellipse.
+   * @param {number} width The width of this ellipse. 
+   * @param {number} height The height of this ellipse. 
+   * @param {Vector} offset The displacement with respect to the center of this ellipse. 
+   */
+  function Ellipse() {
+    var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Vector();
+    var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : new Vector();
+
+    _classCallCheck(this, Ellipse);
+
+    _defineProperty(this, "_position", new Vector());
+
+    _defineProperty(this, "_width", 0);
+
+    _defineProperty(this, "_height", 0);
+
+    _defineProperty(this, "_offset", new Vector());
+
+    this._position = position;
+    this._width = width;
+    this._height = height;
+    this._offset = offset;
+  }
+  /**
+   * Returns the position of this ellipse.
+   * 
+   * @returns {Vector}
+   */
+
+
+  _createClass(Ellipse, [{
+    key: "position",
+    get: function get() {
+      return this._position;
+    }
+    /**
+     * Returns the width of this ellipse.
+     * 
+     * @returns {number}
+     */
+
+  }, {
+    key: "width",
+    get: function get() {
+      return this._width;
+    }
+    /**
+     * Returns the height of this ellipse.
+     * 
+     * @returns {number}
+     */
+
+  }, {
+    key: "height",
+    get: function get() {
+      return this._height;
+    }
+    /**
+     * Returns the offset of this ellipse.
+     * 
+     * @returns {Vector}
+     */
+
+  }, {
+    key: "offset",
+    get: function get() {
+      return this._offset;
+    }
+    /**
+     * Set a new offset for this ellipse.
+     * 
+     * @param {Vector} offset The new offset for this ellipse.
+     */
+    ,
+    set: function set(offset) {
+      this._offset = offset;
+    }
+    /**
+     * Translate the center of the ellipse
+     * 
+     * @param {Vector} position A Vector representing the new center of this ellipse.
+     */
+
+  }, {
+    key: "translate",
+    value: function translate(x, y) {
+      this._position.x += x;
+      this._position.y += y;
+    }
+    /**
+     * Compute the axis-aligned bounding box (AABB) of this ellipse.
+     * 
+     * Note: Returns a new `Polygon` each time this is called.
+     * 
+     * @returns {Polygon} Returns the AABB of this ellipse.
+     */
+
+  }, {
+    key: "getAABB",
+    value: function getAABB() {
+      var corner = this._position.clone().add(this._offset).sub(new Vector(this._width, this._height));
+
+      return new Box(corner, this._width * 2, this._height * 2).toPolygon();
+    }
+    /**
+     * Set the current offset to apply to the radius.
+     * 
+     * @param {Vector} offset The new offset Vector.
+     * 
+     * @returns {Circle} Returns this for chaining.
+     */
+
+  }, {
+    key: "setOffset",
+    value: function setOffset(offset) {
+      this._offset = offset;
+      return this;
+    }
+  }]);
+
+  return Ellipse;
+}();
+
+/**
  * An object representing the result of an intersection containing:
  * - The two objects participating in the intersection
  * - The vector representing the minimum change necessary to extract the first object from the second one (as well as a unit vector in that direction and the magnitude of the overlap)
@@ -1298,6 +1465,30 @@ var Collider2D = /*#__PURE__*/function () {
 
 
       return distanceSq <= radiusSq;
+    }
+    /**
+     * Check if a point is inside a circle.
+     * 
+     * @param {Vector} point The point to test.
+     * @param {Circle} circle The circle to test.
+     * 
+     * @returns {boolean} Returns true if the point is inside the circle or false otherwise.
+     */
+
+  }, {
+    key: "pointInEllipse",
+    value: function pointInEllipse(point, ellipse) {
+      var vector = this._T_VECTORS.pop().copy(point).sub(ellipse.position).sub(ellipse.offset);
+
+      var widthSq = ellipse.width * ellipse.width;
+      var heightSq = ellipse.height * ellipse.height;
+      var pointXSq = vector.x * vector.x;
+      var pointYSq = vector.y * vector.y;
+
+      this._T_VECTORS.push(vector); // If the result distance is smaller than 1 the point its inside the ellipse
+
+
+      return pointXSq / widthSq + pointYSq / heightSq <= 1;
     }
     /**
      * Check if a point is inside a convex polygon.
@@ -1763,4 +1954,4 @@ var Collider2D = /*#__PURE__*/function () {
   return Collider2D;
 }();
 
-export { Box, BoxOrigin, Circle, Collider2D as Collider2d, Polygon, Vector };
+export { Box, BoxOrigin, Circle, Collider2D as Collider2d, Ellipse, Polygon, Vector };
