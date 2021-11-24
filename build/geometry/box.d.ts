@@ -60,27 +60,27 @@ export default class Box {
     /**
      * The position of this box as a Vector.
      *
-     * @property {Vector}
+     * @returns {Vector}
      */
     get position(): Vector;
     /**
      * The width of this box.
      *
-     * @property {number}
+     * @returns {number}
      */
     get width(): number;
     /**
      * The height of this box.
      *
-     * @property {number}
+     * @returns {number}
      */
     get height(): number;
     /**
      * The origin point of this box.
      *
-     * @property {Vector}
+     * @returns {Vector}
      */
-    get origin(): number;
+    get origin(): Vector;
     /**
      * set the origin point of this Box.
      *

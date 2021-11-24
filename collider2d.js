@@ -924,7 +924,7 @@ var Box = /*#__PURE__*/function () {
   /**
    * The position of this box as a Vector.
    *
-   * @property {Vector}
+   * @returns {Vector}
    */
 
 
@@ -936,7 +936,7 @@ var Box = /*#__PURE__*/function () {
     /**
      * The width of this box.
      *
-     * @property {number}
+     * @returns {number}
      */
 
   }, {
@@ -947,7 +947,7 @@ var Box = /*#__PURE__*/function () {
     /**
      * The height of this box.
      *
-     * @property {number}
+     * @returns {number}
      */
 
   }, {
@@ -958,13 +958,13 @@ var Box = /*#__PURE__*/function () {
     /**
      * The origin point of this box.
      *
-     * @property {Vector}
+     * @returns {Vector}
      */
 
   }, {
     key: "origin",
     get: function get() {
-      return this._height;
+      return this._origin;
     }
     /**
      * set the origin point of this Box.
